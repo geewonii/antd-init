@@ -1,9 +1,9 @@
 
-#root {
+#newLogin {
   width: 400px;
   margin: auto;
 }
-#root a {
+#newLogin a {
   color: #f60;
 }
 .ant-tabs-nav-scroll {
@@ -46,6 +46,13 @@
   border-color: #f60;
 }
 .ant-btn:hover, .ant-btn:focus {
-  color: #f60;
+  color: #fff;
   border-color: #f60;
+}
+.ant-btn.antd-pro-login-getCaptcha:hover, .ant-btn.antd-pro-login-getCaptcha:focus {
+  color: #f60;
+}
+.ant-btn[disabled].antd-pro-login-getCaptcha:hover, 
+.ant-btn[disabled].antd-pro-login-getCaptcha:hover {
+  color: #d9d9d9;
 }
