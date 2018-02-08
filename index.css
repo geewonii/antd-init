@@ -1,6 +1,6 @@
 
 #root {
-  width: 500px;
+  width: 400px;
   margin: auto;
 }
 #root a {
@@ -23,9 +23,29 @@
 .ant-tabs-nav .ant-tabs-tab-active {
   color: #f60;
 }
+.ant-tabs-nav .ant-tabs-tab:hover {
+  color: #f60;
+}
 .ant-tabs-nav .ant-tabs-tab-active :hover {
   color: #f60;
 }
 .ant-tabs-nav .ant-tabs-tab-active ::selection {
   background: #f60;
+}
+.ant-tabs-ink-bar {
+  background: #f60;
+}
+.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+  border-color: #f60;
+}
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  background-color: #f60;
+  border-color: #f60;
+}
+.ant-input:hover {
+  border-color: #f60;
+}
+.ant-btn:hover, .ant-btn:focus {
+  color: #f60;
+  border-color: #f60;
 }
