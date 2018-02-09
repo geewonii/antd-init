@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Login from './component/Login';
 require('isomorphic-fetch');
-import { Alert, Checkbox } from 'antd';
+import { Alert, Checkbox, message } from 'antd';
 import styles from './index.css';
 
 const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
@@ -22,46 +22,75 @@ class LoginComponent extends React.PureComponent {
 
   getCaptcha = () => {
     const self = this;
+    //短信接口api
     fetch('./package.json')
     .then(function(response) {
-        if (response.status >= 400) {
-            throw new Error("Bad response from server");
-        }
-        return response.json();
+      if (response.status >= 400) message.error('请求未成功');
+      return response.json();
     })
-    .then(function(stories) {
-        self.setState({captcha: true})
-        console.log(stories);
+    .then(function(res) {
+      self.setState({captcha: true})
+      console.log(res);
     });
   }
 
   changeAutoLogin = e => this.setState({autoLogin: e.target.checked})
 
   handleSubmit = (err, values) => {
-    const { type } = this.state;
     if (!err) {
-      fetch('./package.json', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          type,
-          mobile: values.mobile,
-          captcha: values.captcha
+      /*
+        * type: tab类型 | String
+        * mobile:手机号 | String
+        * captcha：验证码 | String
+        * Password:密码 | String
+      */
+      const { type } = this.state
+      const argument = { type }
+      const tipFunc = (tips) => {
+        message.error(tips)
+        return false
+      }
+      const checkFunc = (argument) => {
+        argument.type === 'mobile'
+        ?
+        (argument.mobile === undefined ? tipFunc('未填写手机号')
+          :
+          (!argument.mobile.match(/^1\d{10}$/) ? tipFunc('手机号不正确')
+            :
+            argument.captcha.length !== 4 ? tipFunc('验证码不正确') : fetchFunc(argument)
+          )
+        )
+        :
+        (argument.mobiles === undefined ? tipFunc('未填写手机号')
+          :
+          (!argument.mobile.match(/^1\d{10}$/) ? tipFunc('手机号不正确')
+            :
+            argument.Password.length <= 6 ? tipFunc() : fetchFunc(argument)
+          )
+        )
+      }
+      const fetchFunc = (argument) => {
+        //提交表单api
+        fetch('./package.json', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(argument)
         })
-      })
-      .then(function(response) {
-          if (response.status >= 400) {
-              throw new Error("Bad response from server");
-          }
+        .then(response => {
+          if (response.status >= 400) message.error('请求未成功');
           return response.json();
-      })
-      .then(function(stories) {
+        })
+        .then(res => {
           self.setState({captcha: true})
-          console.log(stories);
-      });
+          console.log(res);
+        });
+      }
+
+      Object.keys(values).forEach(item => argument[item] = values[item])
+      checkFunc(argument)
     }
   }
 
@@ -73,7 +102,7 @@ class LoginComponent extends React.PureComponent {
           onTabChange={this.onTabChange}
           onSubmit={this.handleSubmit}
         >
-          <Tab key="account" tab="账户密码登录">
+          <Tab key="account" tab="账号密码登录">
             {
               this.state.status === 'error' &&
               this.state.type === 'account' &&
