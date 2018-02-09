@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Button, Row, Col, message } from 'antd';
 import omit from 'omit.js';
 import styles from './index.less';
 import map from './map';
@@ -9,7 +9,7 @@ const FormItem = Form.Item;
 
 function generator({ defaultProps, defaultRules, type }) {
   return (WrappedComponent) => {
-    return class BasicComponent extends PureComponent {
+    return class BasicComponent extends Component {
       static contextTypes = {
         form: PropTypes.object,
         updateActive: PropTypes.func,
@@ -42,8 +42,14 @@ function generator({ defaultProps, defaultRules, type }) {
           }
         }, 1000);
       }
+      checkMobile = () => {
+        const { getFieldValue, isFieldTouched } = this.context.form;
+        const initMobile = isFieldTouched("mobile");
+        const mobile = getFieldValue("mobile");
+        const checkMobiles = initMobile && mobile.match(/^1\d{10}$/);
+        checkMobiles ? this.onGetCaptcha() : message.error("请输入您的手机号");
+      }
       render() {
-        console.log(defaultProps, defaultRules, type);
         const { getFieldDecorator } = this.context.form;
         const options = {};
         let otherProps = {};
@@ -72,7 +78,7 @@ function generator({ defaultProps, defaultRules, type }) {
                     disabled={count}
                     className={styles.getCaptcha}
                     size="large"
-                    onClick={this.onGetCaptcha}
+                    onClick={this.checkMobile}
                   >
                     {count ? `${count} s` : '获取验证码'}
                   </Button>

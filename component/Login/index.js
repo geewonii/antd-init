@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Tabs } from 'antd';
 import classNames from 'classnames';
@@ -8,7 +8,7 @@ import LoginSubmit from './LoginSubmit';
 import styles from './index.less';
 
 @Form.create()
-class Login extends Component {
+class Login extends PureComponent {
   static defaultProps = {
     className: '',
     defaultActiveKey: '',

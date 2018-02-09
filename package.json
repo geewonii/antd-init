@@ -5,10 +5,11 @@
   },
   "dependencies": {
     "ant-design-pro": "^1.1.0",
-    "prop-types": "^15.5.10",
     "antd": "^3.0.0",
     "classnames": "^2.2.5",
+    "isomorphic-fetch": "^2.2.1",
     "moment": "^2.19.3",
+    "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },

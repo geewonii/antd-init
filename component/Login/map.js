@@ -20,7 +20,7 @@ const map = {
       size: 'large',
       prefix: <Icon type="lock" className={styles.prefixIcon} />,
       type: 'password',
-      placeholder: '888888',
+      placeholder: '密码',
     },
     rules: [{
       required: true, message: '请输入密码！',
@@ -36,7 +36,7 @@ const map = {
     rules: [{
       required: true, message: '请输入手机号！',
     }, {
-      pattern: /^1\d{10}$/, message: '手机号格式错误！',
+      pattern: /^1\d+$/, message: '手机号格式错误！',
     }],
   },
   Captcha: {
