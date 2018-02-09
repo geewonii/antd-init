@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import Login from 'ant-design-pro/lib/Login';
 import Login from './component/Login';
 require('isomorphic-fetch');
 import { Alert, Checkbox } from 'antd';
@@ -8,7 +7,7 @@ import styles from './index.css';
 
 const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
 
-class App extends React.PureComponent {
+class LoginComponent extends React.PureComponent {
   state = {
     status: '', //登录状态 success || error || other
     type: 'mobile',
@@ -100,11 +99,11 @@ class App extends React.PureComponent {
           </Tab>
           <div>
             <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>记住账户</Checkbox>
-            <a style={{ float: 'right' }} href="">忘记密码</a>
+            <a style={{ float: 'right' }} href="https://www.phonelee.com/God/ForgotPassword">忘记密码</a>
           </div>
           <Submit loading={this.state.submitting}>登录</Submit>
           <div className={styles.other}>
-            <a style={{ float: 'right' }} href="">注册账户</a>
+            <a style={{ float: 'right' }} href="https://www.phonelee.com/God/Create">马上注册</a>
           </div>
         </Login>
       </div>
@@ -112,4 +111,4 @@ class App extends React.PureComponent {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<LoginComponent />, document.getElementById('LoginComponent'));
