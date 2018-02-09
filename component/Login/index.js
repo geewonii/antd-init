@@ -7,6 +7,7 @@ import LoginTab from './LoginTab';
 import LoginSubmit from './LoginSubmit';
 import styles from './index.less';
 
+@Form.create()
 class Login extends Component {
   static defaultProps = {
     className: '',

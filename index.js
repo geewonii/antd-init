@@ -3,80 +3,71 @@ import ReactDOM from 'react-dom';
 // import Login from 'ant-design-pro/lib/Login';
 import Login from './component/Login';
 import { Alert, Checkbox } from 'antd';
-import './index.css';
+import styles from './index.css';
 
 const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
 
 class App extends React.PureComponent {
+  state = {
+    type: 'account',
+    autoLogin: true,
+    submitting: false,
+  }
+
+  onTabChange = type => this.setState({ type })
+
+  renderMessage = content => <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
+
+  handleSubmit = (err, values) => {
+    const { type } = this.state;
+    if (!err) {
+      this.props.dispatch({
+        type: 'login/login',
+        payload: {...values,type}
+      });
+    }
+  }
+
   render() {
     return (
-      <Login children={[]}/>
+      <div>
+        <Login
+          defaultActiveKey={this.state.type}
+          onTabChange={this.onTabChange}
+          onSubmit={this.handleSubmit}
+        >
+          <Tab key="account" tab="账户密码登录">
+            {
+              // login.status === 'error' &&
+              // login.type === 'account' &&
+              // !login.submitting &&
+              this.renderMessage('账户或密码错误（admin/888888）')
+            }
+            <UserName name="userName" placeholder="admin/user" />
+            <Password name="password" placeholder="888888/123456" />
+          </Tab>
+          <Tab key="mobile" tab="手机号登录">
+            {
+              // login.status === 'error' &&
+              // login.type === 'mobile' &&
+              // !login.submitting &&
+              this.renderMessage('验证码错误')
+            }
+            <Mobile name="mobile" />
+            <Captcha name="captcha" />
+          </Tab>
+          <div>
+            <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>自动登录</Checkbox>
+            <a style={{ float: 'right' }} href="">忘记密码</a>
+          </div>
+          <Submit loading={this.state.submitting}>登录</Submit>
+          <div className={styles.other}>
+            <a style={{ float: 'right' }} href="">注册账户</a>
+          </div>
+        </Login>
+      </div>
     )
   }
 }
-
-// class App extends React.PureComponent {
-//   state = {
-//     notice: '',
-//     type: 'tab2',
-//     autoLogin: true,
-//   }
-//   onSubmit = (err, values) => {
-//     console.log('value collected ->', { ...values, autoLogin: this.state.autoLogin });
-//     if (this.state.type === 'tab1') {
-//       this.setState({
-//         notice: '',
-//       }, () => {
-//         if (!err && (values.username !== 'admin' || values.password !== '888888')) {
-//           setTimeout(() => {
-//             this.setState({
-//               notice: '账号或密码错误！',
-//             });
-//           }, 500);
-//         }
-//       });
-//     }
-//   }
-//   onTabChange = (key) => {
-//     this.setState({
-//       type: key,
-//     });
-//   }
-//   changeAutoLogin = (e) => {
-//     this.setState({
-//       autoLogin: e.target.checked,
-//     });
-//   }
-//   render() {
-//     return (
-//       <Login
-//         defaultActiveKey={this.state.type}
-//         onTabChange={this.onTabChange}
-//         onSubmit={this.onSubmit}
-//       >
-//         <Tab key="tab1" tab="手机号登录">
-//           {
-//             this.state.notice &&
-//             <Alert style={{ marginBottom: 24 }} message={this.state.notice} type="error" showIcon closable />
-//           }
-//           <UserName name="username" />
-//           <Password name="password" />
-//         </Tab>
-//         <Tab key="tab2" tab="动态登录">
-//           <Mobile name="mobile" />
-//           <Captcha onGetCaptcha={() => console.log('Get captcha!')} name="captcha" />
-//         </Tab>
-//         <div>
-//           <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>自动登录</Checkbox>
-//           <a style={{ float: 'right' }} href="">忘记密码</a>
-//         </div>
-//         <Submit>登录</Submit>
-//         <div>
-//           <a style={{ float: 'right' }} href="">注册账户</a>
-//         </div>
-//       </Login>
-//     );
-//   }
-// }
 
 ReactDOM.render(<App />, document.getElementById('root'));

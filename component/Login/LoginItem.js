@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Row, Col } from 'antd';
 import omit from 'omit.js';
@@ -9,7 +9,7 @@ const FormItem = Form.Item;
 
 function generator({ defaultProps, defaultRules, type }) {
   return (WrappedComponent) => {
-    return class BasicComponent extends Component {
+    return class BasicComponent extends PureComponent {
       static contextTypes = {
         form: PropTypes.object,
         updateActive: PropTypes.func,
@@ -43,6 +43,7 @@ function generator({ defaultProps, defaultRules, type }) {
         }, 1000);
       }
       render() {
+        console.log(defaultProps, defaultRules, type);
         const { getFieldDecorator } = this.context.form;
         const options = {};
         let otherProps = {};

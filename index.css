@@ -3,9 +3,6 @@
   width: 500px;
   margin: auto;
 }
-#root a {
-  color: #f60;
-}
 .ant-tabs-nav-scroll {
   text-align: center;
 }
@@ -14,18 +11,4 @@
 }
 .ant-btn-primary {
   margin-top:10px;
-  background-color: #f60;
-  border-color: #f60;
-}
-.ant-btn-primary :hover{
-  background-color: #f60;
-}
-.ant-tabs-nav .ant-tabs-tab-active {
-  color: #f60;
-}
-.ant-tabs-nav .ant-tabs-tab-active :hover {
-  color: #f60;
-}
-.ant-tabs-nav .ant-tabs-tab-active ::selection {
-  background: #f60;
 }
